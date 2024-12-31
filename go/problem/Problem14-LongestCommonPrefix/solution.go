@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func longestCommonPrefix(strs []string) string {
 	if len(strs) == 0 {
@@ -12,10 +14,16 @@ func longestCommonPrefix(strs []string) string {
 
 	// Iterate over the rest of the strings
 	for _, str := range strs[1:] {
+		// If any string is empty, the common prefix must be ""
+		if str == "" {
+			return ""
+		}
+
 		// Shrink the prefix until it matches the start of the current string
-		for len(prefix) > 0 && len(str) > 0 && !startsWith(str, prefix) {
+		for len(prefix) > 0 && !startsWith(str, prefix) {
 			prefix = prefix[:len(prefix)-1]
 		}
+
 		// If prefix becomes empty, return ""
 		if prefix == "" {
 			return ""
@@ -35,8 +43,8 @@ func startsWith(str, prefix string) bool {
 
 func main() {
 	// Test cases
-	fmt.Println(longestCommonPrefix([]string{"flower", "flow", "flight"}))                   // Output: "fl"
-	fmt.Println(longestCommonPrefix([]string{"dog", "racecar", "car"}))                      // Output: ""
-	fmt.Println(longestCommonPrefix([]string{"ab", "a"}))                                    // Output: "a"
-	fmt.Println(longestCommonPrefix([]string{"interspecies", "interstellar", "interstate"})) // Output: "inters"
+	fmt.Println(longestCommonPrefix([]string{"flower", "flow", "flight"})) // Output: "fl"
+	fmt.Println(longestCommonPrefix([]string{"dog", "racecar", "car"}))    // Output: ""
+	fmt.Println(longestCommonPrefix([]string{"ab", "a"}))                  // Output: "a"
+	fmt.Println(longestCommonPrefix([]string{"abab", "aba", ""}))          // Output: ""
 }
